@@ -5,8 +5,15 @@ const { Router } = require('express');
 
 const router = Router();
 
+// const routerBreed = require('./breed.js');
+// const routerTemperament = require('./temperament.js')
+
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
+// router.use('/', routerBreed);
+// router.use('/temperaments', routerTemperament);
 
 module.exports = router;
+
+
