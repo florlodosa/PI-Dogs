@@ -6,61 +6,132 @@ const {
 const axios = require ('axios');
 const { Breed, Temperament } = require('../db.js');
 
-const getApiInfo = async (req, res, next) => {
+const getApiInfo = async () => {
     try {
         const apiUrl = await axios.get(`${URL_BASE_API}?api_key=${API_KEY}`);
-        const apiInfo = await apiUrl.data.map( e => (
-            {
+        const apiInfo = await apiUrl.data.map( e => {
+            // let heightMin = parseInt(e.height.metric.split(' -'));
+            // let heightMax = parseInt(e.height.metric.split('- '));
+            // let weightMin = parseInt(e.weight.metric.split(' -')); 
+            // let weightMax = parseInt(e.weight.metric.split('- '));
+            return {
                 id: e.id,
                 name: e.name,
                 image: e.image.url,
-                temperaments: e.temperament.split(', ').map(e => e),
+                temperaments: 
+                e.temperament?.split(', ').map(e => e),
                 life_span: e.life_span,
-
+                weight: e.weight.metric,
+                height: e.height.metric,
             }
-        ))
+        });
+
+        return apiInfo;
         
     } catch (err) {
-        next(err);
+        console.error(err);
     }
 }
-// Imagen
-// Nombre
-// Temperamento
-// Peso
-// Altura
-// Años de vida
+// weight and height: "23 - 29"
+// dentro del map fuera del return:
+// let heightMin = parseInt(e.height.metric.split(' -'));
+// let heightMax = parseInt(e.height.metric.split('- '));
+// let weightMin = parseInt(e.weight.metric.split(' -')); 
+// let weightMax = parseInt(e.weight.metric.split('- '));
+// dentro del return:
+// heigth =  (heightMin + heightMax) / 2,
+// weight =  (weightMin + weightMax) / 2
 
-// weight": {
+const getDbInfo = async() => {
+    try {
+        return await Breed.findAll({
+            include:{
+                model: Temperament,
+                attributes: ['name'],
+                through: {
+                    attributes: [],
+                },
+            }
+        })
+    } catch (err) {
+        console.error(err);
+    }
+}
 
-//     "imperial": "6 - 13",
-//     "metric": "3 - 6"
+const getAllBreeds = async() => {
+    try {
+        const apiInfo = await getApiInfo();
+        const dbInfo = await getDbInfo();
+        const info = [...apiInfo, ...dbInfo];
+        return info;
+    } catch (err) {
+        console.error(err);
+    }
+}
 
-// },
-// "height": {
+const getBreeds = async(req, res) => {
+    try {
+        const name = req.query.name;
+        const allbreeds = await getAllBreeds();
 
-//     "imperial": "9 - 11.5",
-//     "metric": "23 - 29"
+        if(name){
+            const breedName = await allbreeds.filter( e => e.name.toLowerCase().includes(name.toLowerCase()));
+            breedName.length ?
+            res.status(200).send(breedName) :
+            res.status(404).send('Dog Not Found')
+        } else {
+            res.status(200).send(allbreeds);
+        }
 
-// },
+    } catch (err) {
+        console.error(err);
+    }
+}
 
+const getBreedById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const allBreeds = await getAllBreeds();
+        
+        if (id) {
+            let breedId = await allBreeds.filter( e => e.id == id);
+
+            breedId.length ?
+            res.status(200).json(breedId) :
+            res.status(404).send('Dog not found');
+        }
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+const createBreed = async (req, res) => {
+    const {
+        name, life_span, image, height, weight, temperaments, createdInDb
+    } = req.body;
+
+    const breedCreated = await Breed.create({
+        name, life_span, image, height, weight, temperaments, createdInDb
+    })
+
+    const breedDb = await Temperament.findAll({
+        where: {
+            name: temperaments
+        }
+    });
+    
+    breedCreated.addTemperaments(breedDb);
+    res.send('Dog created!');
+}
+
+// createBreed no trae temperamentos
 
 module.exports = {
     getApiInfo,
     getDbInfo,
-    
+    getAllBreeds,
+    getBreeds,
+    getBreedById,
+    createBreed,
 }
-
-// [ ] GET /dogs:
-// Obtener un listado de las razas de perro
-// Debe devolver solo los datos necesarios para la ruta principal
-// [ ] GET /dogs?name="...":
-// Obtener un listado de las razas de perro que contengan la palabra ingresada como query parameter
-// Si no existe ninguna raza de perro mostrar un mensaje adecuado
-// [ ] GET /dogs/{idRaza}:
-// Obtener el detalle de una raza de perro en particular
-// Debe traer solo los datos pedidos en la ruta de detalle de raza de perro
-// Incluir los temperamentos asociados
-// [ ] POST /dog:
-// Recibe los datos recolectados desde el formulario controlado de la ruta de creación de raza de perro por body
-// Crea una raza de perro en la base de datos

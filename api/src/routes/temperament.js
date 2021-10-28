@@ -2,9 +2,9 @@ const { Router } = require('express');
 
 const router = Router();
 
-// const { funciones } = require('../controllers/temperament.js');
+const { getTemperaments } = require('../controllers/temperament.js');
 
-// router.get('/', funciones);
+router.get('/', getTemperaments);
 
 
 
