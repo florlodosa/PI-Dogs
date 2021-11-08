@@ -10,19 +10,25 @@ const getApiInfo = async () => {
     try {
         const apiUrl = await axios.get(`${URL_BASE_API}?api_key=${API_KEY}`);
         const apiInfo = await apiUrl.data.map( e => {
-            // let heightMin = parseInt(e.height.metric.split(' -'));
-            // let heightMax = parseInt(e.height.metric.split('- '));
-            // let weightMin = parseInt(e.weight.metric.split(' -')); 
-            // let weightMax = parseInt(e.weight.metric.split('- '));
+            let heightMin = parseInt(e.height.metric.split(' -')[0]);
+            let heightMax = parseInt(e.height.metric.split('- ')[1]);
+            let weightMin = parseInt(e.weight.metric.split(' -')[0]); 
+            let weightMax = parseInt(e.weight.metric.split('- ')[1]);
             return {
                 id: e.id,
                 name: e.name,
                 image: e.image.url,
                 temperaments: 
-                e.temperament?.split(', ').map(e => e),
+                e.temperament ?
+                             e.temperament.split(', ').map((e) => {
+                                 return {
+                                     name: e,
+                                 }
+                             }) :
+                             e.temperament, 
                 life_span: e.life_span,
-                weight: e.weight.metric,
-                height: e.height.metric,
+                weight: (weightMin + weightMax) / 2,
+                height: (heightMin + heightMax) / 2,
             }
         });
 
@@ -32,15 +38,6 @@ const getApiInfo = async () => {
         console.error(err);
     }
 }
-// weight and height: "23 - 29"
-// dentro del map fuera del return:
-// let heightMin = parseInt(e.height.metric.split(' -'));
-// let heightMax = parseInt(e.height.metric.split('- '));
-// let weightMin = parseInt(e.weight.metric.split(' -')); 
-// let weightMax = parseInt(e.weight.metric.split('- '));
-// dentro del return:
-// heigth =  (heightMin + heightMax) / 2,
-// weight =  (weightMin + weightMax) / 2
 
 const getDbInfo = async() => {
     try {
@@ -71,17 +68,20 @@ const getAllBreeds = async() => {
 
 const getBreeds = async(req, res) => {
     try {
-        const name = req.query.name;
+        const {name} = req.query;
         const allbreeds = await getAllBreeds();
 
+        
+    
         if(name){
             const breedName = await allbreeds.filter( e => e.name.toLowerCase().includes(name.toLowerCase()));
             breedName.length ?
             res.status(200).send(breedName) :
             res.status(404).send('Dog Not Found')
         } else {
-            res.status(200).send(allbreeds);
+             res.status(200).send(allbreeds);
         }
+
 
     } catch (err) {
         console.error(err);
@@ -125,7 +125,6 @@ const createBreed = async (req, res) => {
     res.send('Dog created!');
 }
 
-// createBreed no trae temperamentos
 
 module.exports = {
     getApiInfo,

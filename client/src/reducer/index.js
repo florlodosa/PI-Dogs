@@ -1,7 +1,12 @@
-import { GET_BREEDS } from "../constants";
+import {
+    GET_BREEDS,
+    GET_TEMPERAMENTS,
+    FILTER_BY_TEMPERAMENTS,
+} from "../constants";
 
 const initialState = {
     breeds: [],
+    temperaments: [],
 }
 
 function rootReducer (state = initialState, action) {
@@ -11,9 +16,26 @@ function rootReducer (state = initialState, action) {
                 ...state,
                 breeds: action.payload,
             }
-            default:
-                return state;
+        case GET_TEMPERAMENTS:
+            return {
+                ...state,
+                temperaments: action.payload,
+            }
+        case FILTER_BY_TEMPERAMENTS:
+            const allBreeds = state.breeds;
+            const filteredBreeds = 
+            allBreeds.filter((e) => {
+                return e.temperaments?.find((e) => {
+                    return e.name === action.payload;
+                });
+            });
+            return {
+                ...state,
+                breeds: filteredBreeds,
+            }
+
+        default:
+            return state;
     }
 }
-
 export default rootReducer;

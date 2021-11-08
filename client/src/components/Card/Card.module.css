@@ -1,0 +1,25 @@
+.card {
+    width: 270px;
+    height: 350px;
+    border: solid 2px;
+    border-color: #05ddfa;
+    border-radius: 15px;
+}
+
+.name {
+    font-size: 190%;
+    margin: 5px;
+}
+
+.temps {
+    font-size: 100%;
+}
+
+.w {
+    font-size: 80%;
+    margin-top: 5px
+}
+
+.image {
+    border-radius: 30px;
+}

@@ -20,7 +20,7 @@ const getTemperaments = async (req, res) => {
             if(!(e === undefined)) {
                 await Temperament.findOrCreate({
                     where: { 
-                        name: e
+                        name: e.name
                     },
                 })
             };
