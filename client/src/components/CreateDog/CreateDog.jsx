@@ -8,11 +8,34 @@ import {
 } from "../../actions";
 import s from "./CreateDog.module.css";
 
+
+function validate(input){
+    let errors= {};
+    
+    if(!input.name){
+        errors.name = 'Please enter a dog name'
+    }
+    if(!input.weight_min){
+        errors.weight_min = 'Please enter a minimum weight for your dog'
+    }
+    if(!input.weight_max){
+        errors.weight_max = 'Please enter a maximum weight for your dog'
+    }
+    if(!input.height_min){
+        errors.height_min = 'Please enter a minimum height for your dog'
+    }
+    if(!input.height_max){
+        errors.height_max = 'Please enter a maximum height for your dog'
+    }
+    
+    return errors;
+}
+
 export default function CreateDog () {
     const dispach = useDispatch();
     const history = useHistory();
-    //metodo del router-dom que lo que hace es redirigirme a la ruta que le diga
-
+    
+    const [errors, setErrors] = useState({});
 
     const [input, setInput] = useState(
         {
@@ -38,6 +61,10 @@ export default function CreateDog () {
             ...input,
             [e.target.name]: e.target.value,
         })
+        setErrors(validate({
+            ...input,
+            [e.target.name]: e.target.value,
+        }));
     }
 
     function handleSelect(e){
@@ -67,12 +94,12 @@ export default function CreateDog () {
 
     return (
         <div className={s.container}>
-            <Link to='/home'>
-                <button>Go back</button>
+            <Link to='/home' className={s.link}>
+                <button className={s.btn}>Go back</button>
             </Link>
-            <h1>Create your dog!</h1>
-            <form onSubmit={e => handleSubmit(e)}>
-                <div>
+            <h1 className={s.title}>Create your dog!</h1>
+            <form onSubmit={e => handleSubmit(e)} className={s.form}>
+                <div className={s.box}>
                     <label>Name:</label>
                     <input 
                         type='text'
@@ -80,9 +107,13 @@ export default function CreateDog () {
                         name='name'
                         onChange={e => handleChange(e)}
                         placeholder="Insert a dog name"
+                        className={s.input}
                     />
+                    {errors.name && (
+                        <p className={s.error}>{errors.name}</p>
+                    )}
                 </div>
-                <div>
+                <div className={s.box}>
                     <label>Image:</label>
                     <input 
                         type='text'
@@ -90,9 +121,10 @@ export default function CreateDog () {
                         name='image'
                         onChange={e => handleChange(e)}
                         placeholder="Insert an url"
+                        className={s.input}
                     />
                 </div>
-                <div>
+                <div className={s.box}>
                     <label>Life Span:</label>
                     <input 
                         type='text'
@@ -100,9 +132,10 @@ export default function CreateDog () {
                         name='life_span'
                         onChange={e => handleChange(e)}
                         placeholder="Insert a life span"
+                        className={s.input}
                     />
                 </div>
-                <div>
+                <div className={s.box}>
                     <label>Height Min:</label>
                     <input 
                         type='number'
@@ -111,10 +144,14 @@ export default function CreateDog () {
                         value={input.height_min}
                         name='height_min'
                         onChange={e => handleChange(e)}
-                        placeholder="Insert a height minimum"
+                        placeholder="Insert a height min"
+                        className={s.input}
                     />
+                    {errors.height_min && (
+                        <p className={s.error}>{errors.height_min}</p>
+                    )}
                 </div>
-                <div>
+                <div className={s.box}>
                     <label>Height Max:</label>
                     <input 
                         type='number'
@@ -123,10 +160,14 @@ export default function CreateDog () {
                         value={input.height_max}
                         name='height_max'
                         onChange={e => handleChange(e)}
-                        placeholder="Insert a height maximum"
+                        placeholder="Insert a height max"
+                        className={s.input}
                     />
+                    {errors.height_max && (
+                        <p className={s.error}>{errors.height_max}</p>
+                    )}
                 </div>
-                <div>
+                <div className={s.box}>
                     <label>Weight Min:</label>
                     <input 
                         type='number'
@@ -135,10 +176,14 @@ export default function CreateDog () {
                         value={input.weight_min}
                         name='weight_min'
                         onChange={e => handleChange(e)}
-                        placeholder="Insert a weight minimum"
+                        placeholder="Insert a weight min"
+                        className={s.input}
                     />
+                    {errors.weight_min && (
+                        <p className={s.error}>{errors.weight_min}</p>
+                    )}
                 </div>
-                <div>
+                <div className={s.box}>
                     <label>Weight Max:</label>
                     <input 
                         type='number'
@@ -147,8 +192,12 @@ export default function CreateDog () {
                         value={input.weight_max}
                         name='weight_max'
                         onChange={e => handleChange(e)}
-                        placeholder="Insert a weight maximum"
+                        placeholder="Insert a weight max"
+                        className={s.input}
                     />
+                    {errors.weight_max && (
+                        <p className={s.error}>{errors.weight_max}</p>
+                    )}
                 </div>
                 <select onChange={ e => handleSelect(e)}>
                     <option selected="false" disabled>
@@ -161,7 +210,7 @@ export default function CreateDog () {
                 <ul>
                         {input.temperaments.map(e => <li>{e}</li>)}
                 </ul>
-                <button type='submit'>Create</button>
+                <button type='submit' className={s.submit} disabled={errors.name}>Create</button>
             </form>
         </div>
     )

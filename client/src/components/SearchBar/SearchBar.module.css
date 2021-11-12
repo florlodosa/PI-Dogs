@@ -1,0 +1,12 @@
+
+.input{
+    margin-left: 585px;
+    border-radius: 5px;
+    border: 1px solid palevioletred;
+}
+
+button{
+    border-radius: 5px;
+    cursor: pointer;
+    border: 1px solid palevioletred;
+}

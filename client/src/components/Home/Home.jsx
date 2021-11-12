@@ -18,18 +18,17 @@ import s from "./Home.module.css";
 export default function Home() {
     const dispatch = useDispatch();
     const allBreeds = useSelector((state) => state.breeds)
-    //useSelector<3 trae todo lo que esta en el estado de breeds(mas facil que hacer el mapstate to props)
+    
     const [, setRender] = useState("");
-    //para que al setear la pag, se modifique el estado local y se renderize
+    
     const [currentPage, setCurrentPage] = useState(1);
-    //estado local 
+    
     const [breedsPerPage] = useState(8); 
-    //estado local 
+    
     const indexOfLastBreed = currentPage * breedsPerPage;
     const indexOfFirstBreed = indexOfLastBreed - breedsPerPage;
     const currentBreeds = allBreeds.slice(indexOfFirstBreed, indexOfLastBreed)
-    //las breeds que estan en la pag actual
-    //allbreeds es el arreglo del estado que viene del reducer
+    
 
     const pagination = (pageNumber) => {
         setCurrentPage(pageNumber)
@@ -37,9 +36,8 @@ export default function Home() {
 
     useEffect( () => {
         dispatch(getBreeds());
-        //use dispach es como hacer el dispach to props
     }, [dispatch])
-    //useEffect trae del state las breeds cuando el component se monta
+
 
     function handleClick(e){
         e.preventDefault();
@@ -84,28 +82,29 @@ export default function Home() {
 
     return (
         <div className={s.container}>
-            <Link to='/dog' className={s.links}>Create new Dog</Link>
+            <Link to='/dog' className={s.links}> <button className={s.btn}>Create a new Dog!</button></Link>
             <h1 className={s.titleHome}>Dogs</h1>
             <SearchBar />
-            <button onClick={e => {handleClick(e)}}>
+            <button className={s.button} onClick={e => {handleClick(e)}}>
                 Show me all the dogs
             </button>
             <div>
-                <select onChange={e => handleOrderByName(e)}>
+            <div className={s.selectContainer}>
+                <select onChange={e => handleOrderByName(e)} className={s.select}>
                     <option selected="false" disabled >
                         Order by Alphabet
                     </option>
                     <option value="asc">Aa-Zz</option>
                     <option value="desc">Zz-Aa</option>
                 </select>
-                <select onChange={e => handleOrderByWeigth(e)}>
+                <select onChange={e => handleOrderByWeigth(e)} className={s.select}>
                     <option selected="false" disabled >
                         Order by Weight
                     </option>
                     <option value="0to1">Low to High</option>
                     <option value="1to0">High to Low</option>
                 </select>
-                <select onChange={e => handleFilterByExistence(e)}>
+                <select onChange={e => handleFilterByExistence(e)} className={s.select}>
                     <option selected="false" disabled >
                         Filter by Existence
                     </option>
@@ -113,7 +112,7 @@ export default function Home() {
                     <option value="Created">Created</option>
                     <option value="Existent">Existent</option>
                 </select>
-                <select onChange={e => handleFilterByTemperaments(e)}>
+                <select onChange={e => handleFilterByTemperaments(e)} className={s.select}>
                     <option selected="false" disabled >
                         Filter by Temperaments
                     </option>
@@ -126,6 +125,7 @@ export default function Home() {
                         ))
                     }
                 </select> 
+                </div>
                 <ul className={s.dogsCards}>
                 {
                     currentBreeds && currentBreeds.map(e => (
@@ -136,7 +136,8 @@ export default function Home() {
                             image={e.image} 
                             temperaments={e.temperaments} 
                             weight_min={e.weight_min}
-                            weight_max={e.weight_max}   
+                            weight_max={e.weight_max}
+                           
                         />
                         </Link>
                     )

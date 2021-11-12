@@ -1,0 +1,35 @@
+
+.landingPage{
+    background-image: url("../../images/dog.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+}
+
+.link{
+    text-decoration: none;
+}
+
+.btn{
+    display: flex;
+    flex-direction: column;
+    margin: 15px 15px 15px 400px;
+    cursor: pointer;
+    border: 1px solid palevioletred;
+    border-radius: 5px;
+    width: 100px;
+    height: 30px;
+    font-size: 20px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.title {
+    margin: 15px 15px 15px 50px;
+    color: brown;
+    text-shadow: rgba(31, 24, 24, 0.75) 4px 4px 15px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 0;
+    font-size: 400%;
+    margin-bottom: 20px;
+}

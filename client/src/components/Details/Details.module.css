@@ -1,3 +1,11 @@
+.container{
+    background-image: url("../../images/dog_patita.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+}
+
 .card {
     display: flex;
     flex-direction: column;
@@ -6,11 +14,50 @@
     border: solid 2px;
     border-color: rgba(245, 141, 172);
     border-radius: 15px;
-    margin: 15px 15px 15px 450px;
+    margin: 1px 1px 1px 450px;
     background-color: rgba(245, 141, 172, 0.50);
-    cursor: pointer;
 }
 
 .link{
     text-decoration: none;
+}
+
+.btn{
+    display: flex;
+    flex-direction: column;
+    margin: 15px 15px 15px 450px;
+    cursor: pointer;
+    border: 1px solid palevioletred;
+    border-radius: 5px;
+}
+
+.image {
+    width: 300px;
+    height: 200px;
+    margin: 1px;
+    padding: 5px;
+    margin-left: 50px;
+    border-radius: 30px;
+    font-size: 30px;
+}
+
+.info{
+    margin: 3px;
+    color: beige;
+    text-shadow: rgba(0, 0, 0, 0.75) 2px 2px 5px;;
+    padding: 6px;
+}
+
+.temps{
+    margin: 2px;
+    padding: 2px;
+    font-size: 20px;
+    color: beige;
+    text-shadow: rgba(0, 0, 0, 0.75) 2px 2px 5px;;
+}
+
+.name{
+    margin: 5px;
+    color: beige;
+    text-shadow: rgba(0, 0, 0, 0.75) 6px 6px 9px;;
 }
