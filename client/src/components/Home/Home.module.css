@@ -1,19 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Walter+Turncoat&display=swap');
 
-.dogGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 250px);
-    gap: 40px;
-    padding: 40px;
-    justify-content: center; 
+
+.container {
+    background-image: url("../../images/dog_patita.jpg");
 }
 
-
+.dogsCards {
+    display: flex;
+    justify-content: space-around;
+    
+    flex-wrap: wrap;
+    
+}
 
 .titleHome {
-    text-shadow: rgba(255, 0, 0, 0.25) 4px 4px 15px;;
+    text-shadow: rgba(245, 141, 172, 0.50) 4px 4px 15px;;
     margin-top: 0;
     font-family: "Oregano", cursive;
     font-size: 400%;
     margin-bottom: 20px;
+}
+
+.links{
+    text-decoration: none;
 }

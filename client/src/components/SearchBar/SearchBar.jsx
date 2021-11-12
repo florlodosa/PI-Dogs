@@ -8,12 +8,12 @@ export default function SearchBar(){
     const [name, setName] = useState("");
 
     function handleInput(e){
-        e.preventDefult()
+        e.preventDefault();
         setName(e.target.value)
     }
 
     function handleSubmit(e){
-        e.preventDefult()
+        e.preventDefault();
         dispach(getBreedsByName(name));
     }
 

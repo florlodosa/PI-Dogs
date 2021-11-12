@@ -1,25 +1,53 @@
 .card {
+    display: flex;
+    flex-direction: column;
     width: 270px;
     height: 350px;
     border: solid 2px;
-    border-color: #05ddfa;
+    border-color: rgba(245, 141, 172);
     border-radius: 15px;
+    margin: 15px;
+    background-color: rgba(245, 141, 172, 0.50);
+    cursor: pointer;
 }
 
 .name {
-    font-size: 190%;
-    margin: 5px;
+    font-size: 150%;
+    padding: 5px;
+    margin: 1px;
+    color: beige;
 }
 
 .temps {
-    font-size: 100%;
+    font-size: 80%;
+    padding: 5px;
+    margin: 1px;
+    color: beige;
+
 }
 
 .w {
+    color: beige;
     font-size: 80%;
-    margin-top: 5px
+    padding: 5px;
+    margin: 1px;
+}
+
+.info{
+    width: 90%;
+    height: 50%;
+    margin: 1px;
+    text-shadow: rgba(0, 0, 0, 0.75) 2px 2px 5px;;
 }
 
 .image {
     border-radius: 30px;
+    margin: 1px;
 }
+
+.imageBox{
+    width: 100%;
+    height: 40%;
+    padding-left: 45px;
+}
+

@@ -5,3 +5,5 @@ export const FILTER_BY_EXISTENCE = "FILTER_BY_EXISTENCE";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_WEIGTH = "ORDER_BY_WEIGTH";
 export const GET_NAME_BREEDS = "GET_NAME_BREEDS";
+export const POST_DOG = "POST_DOG";
+export const GET_DETAILS = "GET_DETAILS"

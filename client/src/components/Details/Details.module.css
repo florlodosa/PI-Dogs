@@ -1,0 +1,16 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 420px;
+    height: 500px;
+    border: solid 2px;
+    border-color: rgba(245, 141, 172);
+    border-radius: 15px;
+    margin: 15px 15px 15px 450px;
+    background-color: rgba(245, 141, 172, 0.50);
+    cursor: pointer;
+}
+
+.link{
+    text-decoration: none;
+}

@@ -7,6 +7,7 @@ import {
     ORDER_BY_NAME,
     ORDER_BY_WEIGTH,
     GET_NAME_BREEDS,
+    GET_DETAILS,
 } from "../constants";
 
 export function getBreeds () {
@@ -62,7 +63,7 @@ export function orderByWeigth(payload){
 export function getBreedsByName(name){
     return async function (dispach) {
         try{
-            var res = await axios.get(`http://localhost:3001/dogs?name=${name}`);
+            const res = await axios.get(`http://localhost:3001/dogs?name=${name}`);
             return dispach ({
                 type: GET_NAME_BREEDS,
                 payload: res.data,
@@ -70,5 +71,22 @@ export function getBreedsByName(name){
         }catch(err){
             console.error(err);
         }
+    }
+}
+
+export function postDog(payload){
+    return async function () {
+        const res = await axios.post('http://localhost:3001/dog', payload);
+        return res;
+    }
+}
+
+export function getDetails(id){
+    return async function(dispach){
+        const res = await axios.get(`http://localhost:3001/dogs/${id}`);
+        return dispach ({
+            type: GET_DETAILS,
+            payload: res.data,
+        })
     }
 }

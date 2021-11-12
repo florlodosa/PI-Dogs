@@ -27,8 +27,10 @@ const getApiInfo = async () => {
                              }) :
                              e.temperament, 
                 life_span: e.life_span,
-                weight: (weightMin + weightMax) / 2,
-                height: (heightMin + heightMax) / 2,
+                weight_min: weightMin, 
+                weight_max: weightMax,
+                height_min: heightMin,
+                height_max: heightMax,
             }
         });
 
@@ -108,11 +110,11 @@ const getBreedById = async (req, res) => {
 
 const createBreed = async (req, res) => {
     const {
-        name, life_span, image, height, weight, temperaments, createdInDb
+        name, life_span, image, height_min, height_max, weight_min, weight_max, temperaments, createdInDb
     } = req.body;
 
     const breedCreated = await Breed.create({
-        name, life_span, image, height, weight, temperaments, createdInDb
+        name, life_span, image, height_min, height_max, weight_min, weight_max, temperaments, createdInDb
     })
 
     const breedDb = await Temperament.findAll({

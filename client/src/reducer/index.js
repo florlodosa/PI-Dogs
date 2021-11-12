@@ -6,12 +6,15 @@ import {
     ORDER_BY_NAME,
     ORDER_BY_WEIGTH,
     GET_NAME_BREEDS,
+    POST_DOG,
+    GET_DETAILS,
 } from "../constants";
 
 const initialState = {
     breeds: [],
     temperaments: [],
     allBreeds: [],
+    details: [],
 }
 
 function rootReducer (state = initialState, action) {
@@ -76,8 +79,8 @@ function rootReducer (state = initialState, action) {
             }
         case ORDER_BY_WEIGTH:
             const orderedArr = action.payload === "0to1" ?
-            state.breeds.sort((a, b) => a.weight - b.weight)
-            : state.breeds.sort((a, b) => b.weight - a.weight);
+            state.breeds.sort((a, b) => a.weight_min - b.weight_min)
+            : state.breeds.sort((a, b) => b.weight_max - a.weight_max);
             return {
                 ...state,
                 breeds: orderedArr,
@@ -86,6 +89,15 @@ function rootReducer (state = initialState, action) {
             return {
                 ...state,
                 breeds: action.payload,
+            }
+        case POST_DOG:
+            return {
+                ...state,
+            }
+        case GET_DETAILS:
+            return {
+                ...state,
+                details: action.payload,
             }
         default:
             return state;

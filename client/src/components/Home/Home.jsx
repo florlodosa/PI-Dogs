@@ -83,8 +83,8 @@ export default function Home() {
     }
 
     return (
-        <div>
-            <Link to='/dog'>Create new Recipe</Link>
+        <div className={s.container}>
+            <Link to='/dog' className={s.links}>Create new Dog</Link>
             <h1 className={s.titleHome}>Dogs</h1>
             <SearchBar />
             <button onClick={e => {handleClick(e)}}>
@@ -126,10 +126,20 @@ export default function Home() {
                         ))
                     }
                 </select> 
-                <ul className={s.dogGrid}>
+                <ul className={s.dogsCards}>
                 {
-                    currentBreeds && currentBreeds.map(e => 
-                        <Card id={e.id} name={e.name} image={e.image} temperaments={e.temperaments} weight={e.weight} key={e.id} />
+                    currentBreeds && currentBreeds.map(e => (
+                        <Link to={"/home/" + e.id} key={e.id} className={s.links}>
+                            <Card 
+                            id={e.id} 
+                            name={e.name} 
+                            image={e.image} 
+                            temperaments={e.temperaments} 
+                            weight_min={e.weight_min}
+                            weight_max={e.weight_max}   
+                        />
+                        </Link>
+                    )
                     )
                 }
                 </ul>
